@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central District Youth Ministry Health Check</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .rating-option input[type="radio"] {
+            display: none;
+        }
+        
+        .rating-circle {
+            transition: all 0.2s ease;
+        }
+
+        .rating-option input[type="radio"]:checked + .rating-circle {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+            border-color: #0d9488;
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.4);
+        }
+
+        .form-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #ffffff;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin 1s linear infinite; /* Safari */
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Header / Hero Section -->
+    <div class="bg-gradient-to-r from-teal-700 to-cyan-800 text-white pb-24 pt-12 px-4 shadow-lg">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block p-3 rounded-full bg-white/10 mb-4 backdrop-blur-sm">
+                <i class="fas fa-heartbeat text-3xl text-teal-200"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4 tracking-tight">Youth Ministry Health Check</h1>
+            <p class="text-teal-100 text-lg max-w-2xl mx-auto leading-relaxed">
+                Evaluating the health, effectiveness, and cultural relevance of youth ministry in CDSIAG. 
+                Designed for Pastors, Core Leaders, and Elders.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Form Container -->
+    <main class="max-w-3xl mx-auto px-4 -mt-16 pb-20 relative z-10">
+        
+        <form id="healthCheckForm" onsubmit="handleSubmit(event)" class="space-y-6">
+
+            <!-- Personal Info Card -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+                    <span class="bg-teal-100 text-teal-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+                    Your Details
+                </h2>
+
+                <div class="space-y-6">
+                    <!-- Role -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3">Your Role in the Ministry <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <label class="relative flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors has-[:checked]:border-teal-500 has-[:checked]:bg-teal-50">
+                                <input type="radio" name="role" value="pastor" class="h-4 w-4 text-teal-600 border-gray-300 focus:ring-teal-500" required>
+                                <span class="ml-3 text-sm font-medium text-gray-900">Youth Pastor/Leader</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors has-[:checked]:border-teal-500 has-[:checked]:bg-teal-50">
+                                <input type="radio" name="role" value="volunteer" class="h-4 w-4 text-teal-600 border-gray-300 focus:ring-teal-500">
+                                <span class="ml-3 text-sm font-medium text-gray-900">Core Volunteer</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors has-[:checked]:border-teal-500 has-[:checked]:bg-teal-50">
+                                <input type="radio" name="role" value="elder" class="h-4 w-4 text-teal-600 border-gray-300 focus:ring-teal-500">
+                                <span class="ml-3 text-sm font-medium text-gray-900">Church Elder/Oversight</span>
+                            </label>
+                            <label class="relative flex items-center p-3 rounded-lg border border-gray-200 hover:bg-gray-50 cursor-pointer transition-colors has-[:checked]:border-teal-500 has-[:checked]:bg-teal-50">
+                                <input type="radio" name="role" value="other" class="h-4 w-4 text-teal-600 border-gray-300 focus:ring-teal-500">
+                                <span class="ml-3 text-sm font-medium text-gray-900">Other</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Inputs -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name & Mobile (WhatsApp) <span class="text-red-500">*</span></label>
+                            <input type="text" id="name" name="name" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-teal-500 focus:ring-teal-500 transition-shadow outline-none" placeholder="e.g. John Doe, 9876543210" required>
+                        </div>
+                        <div>
+                            <label for="church" class="block text-sm font-medium text-gray-700 mb-1">Name of Church <span class="text-red-500">*</span></label>
+                            <input type="text" id="church" name="church" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-teal-500 focus:ring-teal-500 transition-shadow outline-none" required>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City/Town in Karnataka <span class="text-red-500">*</span></label>
+                            <input type="text" id="city" name="city" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-teal-500 focus:ring-teal-500 transition-shadow outline-none" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <div class="flex items-center mb-6">
+                    <span class="bg-indigo-100 text-indigo-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 font-bold">S1</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Spiritual Foundation & Discipleship</h2>
+                        <p class="text-sm text-gray-500 mt-1">Rate from 1 (Urgent Attention) to 5 (Excellent)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 divide-y divide-gray-100">
+                    <!-- Questions generated dynamically to save space in code, but full HTML structure below -->
+                    
+                    <!-- Question Item -->
+                    <div class="pt-4 first:pt-0">
+                        <p class="font-medium text-gray-900 mb-2">Gospel Clarity</p>
+                        <p class="text-sm text-gray-500 mb-4">Our youth can clearly understand and explain the Gospel message without relying on Christian jargon.</p>
+                        <div class="flex justify-between max-w-sm mx-auto md:mx-0">
+                            <!-- Helper function will generate these -->
+                            <div class="rating-group flex justify-between w-full" data-name="gospel_clarity"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm">
+                            <span>Urgent</span>
+                            <span>Excellent</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Biblical Literacy</p>
+                        <p class="text-sm text-gray-500 mb-4">Teaching moves beyond "moral stories" to deep engagement with Scripture.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="biblical_literacy"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Prayer Culture</p>
+                        <p class="text-sm text-gray-500 mb-4">Prayer is spontaneous and central, not just an opening/closing formality.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="prayer_culture"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Spirit-filled Experience</p>
+                        <p class="text-sm text-gray-500 mb-4">Youth have a Spirit-filled experience (tongues/baptism) and are led into it.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="spirit_filled"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Mentorship</p>
+                        <p class="text-sm text-gray-500 mb-4">Older, mature believers are personally discipling younger students.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="mentorship"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <div class="flex items-center mb-6">
+                    <span class="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 font-bold">S2</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Outreach & Growth</h2>
+                        <p class="text-sm text-gray-500 mt-1">Rate from 1 (Urgent Attention) to 5 (Excellent)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 divide-y divide-gray-100">
+                    <div class="pt-4 first:pt-0">
+                        <p class="font-medium text-gray-900 mb-2">Welcoming Atmosphere</p>
+                        <p class="text-sm text-gray-500 mb-4">A first-time visitor would feel welcomed, safe, and included within 10 minutes.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="welcoming"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Evangelistic Zeal</p>
+                        <p class="text-sm text-gray-500 mb-4">Students actively invite non-believer friends to events.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="evangelism"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Follow-up System</p>
+                        <p class="text-sm text-gray-500 mb-4">Clearly defined process for following up with a visitor within 48 hours.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="follow_up"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Community Impact</p>
+                        <p class="text-sm text-gray-500 mb-4">Engaging in local social needs (orphanages, cleaning, tuition) to show faith in action.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="community"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Cultural Relevance</p>
+                        <p class="text-sm text-gray-500 mb-4">Addressing current issues (identity, social media, mental health) from a biblical perspective.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="cultural"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <div class="flex items-center mb-6">
+                    <span class="bg-orange-100 text-orange-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 font-bold">S3</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Leadership & Administration</h2>
+                        <p class="text-sm text-gray-500 mt-1">Rate from 1 (Urgent Attention) to 5 (Excellent)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 divide-y divide-gray-100">
+                    <div class="pt-4 first:pt-0">
+                        <p class="font-medium text-gray-900 mb-2">Vision Alignment</p>
+                        <p class="text-sm text-gray-500 mb-4">Youth vision supports the main church rather than operating as a separate unit.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="vision"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Leader Training</p>
+                        <p class="text-sm text-gray-500 mb-4">Regular training (2-3 times/year) to equip volunteers in ministry and counseling.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="training"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+
+                     <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Safety & Integrity</p>
+                        <p class="text-sm text-gray-500 mb-4">Clear guidelines regarding male/female interactions and safety protocols.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="safety"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Urgent</span><span>Excellent</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 4: Contextual Labels -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <div class="flex items-center mb-6">
+                    <span class="bg-pink-100 text-pink-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 font-bold">S4</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Community & Fellowship</h2>
+                        <p class="text-sm text-gray-500 mt-1">Internal relational health and unity</p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 divide-y divide-gray-100">
+                    <div class="pt-4 first:pt-0">
+                        <p class="font-medium text-gray-900 mb-2">Linguistic Unity</p>
+                        <p class="text-sm text-gray-500 mb-4">Bridging gaps between different language groups to foster unity.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="linguistic"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Not Effective</span><span>Highly Effective</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Conflict Resolution</p>
+                        <p class="text-sm text-gray-500 mb-4">Conflicts handled biblically and quickly, avoiding gossip.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="conflict"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Poorly Handled</span><span>Always Well</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Vulnerability</p>
+                        <p class="text-sm text-gray-500 mb-4">Safe environment to confess struggles (sin, doubt, anxiety) without judgment.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="vulnerability"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Unsafe</span><span>Very Safe</span></div>
+                    </div>
+                    
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Fun & Joy</p>
+                        <p class="text-sm text-gray-500 mb-4">Genuine laughter and joy; a place youth want to be.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="joy"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Dull</span><span>Joyful</span></div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- SECTION 5: Karnataka Context -->
+             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <div class="flex items-center mb-6">
+                    <span class="bg-amber-100 text-amber-700 w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 font-bold">S5</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800">Karnataka Context</h2>
+                        <p class="text-sm text-gray-500 mt-1">Unique local factors (academics, family, etc.)</p>
+                    </div>
+                </div>
+
+                <div class="space-y-8 divide-y divide-gray-100">
+                    <div class="pt-4 first:pt-0">
+                        <p class="font-medium text-gray-900 mb-2">Parental Partnership</p>
+                        <p class="text-sm text-gray-500 mb-4">Helping parents view youth ministry as a partner, not a distraction.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="parents"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>No Partnership</span><span>Strong</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Academic Balance</p>
+                        <p class="text-sm text-gray-500 mb-4">Providing support during exams vs. guilting students for missing church.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="academic"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Guilt Focused</span><span>Supportive</span></div>
+                    </div>
+
+                    <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Technology & Media</p>
+                        <p class="text-sm text-gray-500 mb-4">Discipling students on smartphone/social media usage.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="tech"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>No Guidance</span><span>Relevant</span></div>
+                    </div>
+
+                     <div class="pt-4">
+                        <p class="font-medium text-gray-900 mb-2">Traditional vs Modern</p>
+                        <p class="text-sm text-gray-500 mb-4">Handling tension between traditional expectations and modern expression.</p>
+                        <div class="rating-group flex justify-between w-full max-w-sm" data-name="modern"></div>
+                        <div class="flex justify-between text-xs text-gray-400 mt-2 max-w-sm"><span>Rigid</span><span>Balanced</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reflection -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 form-section">
+                <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center">
+                    <i class="far fa-lightbulb text-yellow-500 mr-3 text-xl"></i>
+                    Final Reflection
+                </h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <label for="challenge" class="block text-sm font-medium text-gray-700 mb-2">What is the ONE specific challenge this ministry needs next?</label>
+                        <textarea id="challenge" name="challenge" rows="3" class="w-full rounded-lg border-gray-300 border px-4 py-3 focus:border-teal-500 focus:ring-teal-500 outline-none transition-shadow" placeholder="Share your thoughts..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="improvements" class="block text-sm font-medium text-gray-700 mb-2">Name Top 3 Areas for Improvement</label>
+                        <textarea id="improvements" name="improvements" rows="3" class="w-full rounded-lg border-gray-300 border px-4 py-3 focus:border-teal-500 focus:ring-teal-500 outline-none transition-shadow" placeholder="1. &#10;2. &#10;3. "></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="pt-4">
+                <button id="submitBtn" type="submit" class="w-full bg-gradient-to-r from-teal-600 to-cyan-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.01] transition-all duration-200 flex items-center justify-center">
+                    <span id="btnText">Submit Health Check</span>
+                    <i id="btnIcon" class="fas fa-paper-plane ml-3"></i>
+                    <div id="btnSpinner" class="spinner hidden ml-3"></div>
+                </button>
+            </div>
+            
+            <p class="text-center text-gray-400 text-xs mt-6">
+                CDSIAG Youth Department &copy; 2024
+            </p>
+
+        </form>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl max-w-md w-full p-8 text-center transform scale-95 transition-transform duration-300">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-4xl text-green-600"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+            <p class="text-gray-600 mb-8">Your ministry health check has been recorded. Thank you for your leadership and honesty.</p>
+            <button onclick="closeModal()" class="w-full bg-gray-900 text-white font-medium py-3 rounded-lg hover:bg-gray-800 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // *** IMPORTANT: PASTE YOUR GOOGLE WEB APP URL HERE ***
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyIPIFDyMnmVk2C-DOxiJXhM9TXTacYxb1AcBijzP5PLSZbLkAA2DUZCXqgs9QDWXktLg/exec'; 
+
+        // Initialize Ratings
+        document.querySelectorAll('.rating-group').forEach(group => {
+            const name = group.dataset.name;
+            for (let i = 1; i <= 5; i++) {
+                const label = document.createElement('label');
+                label.className = 'rating-option cursor-pointer';
+                label.innerHTML = `
+                    <input type="radio" name="${name}" value="${i}" required>
+                    <div class="rating-circle w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-gray-200 flex items-center justify-center text-gray-400 font-semibold hover:border-teal-400 hover:text-teal-500 bg-white">
+                        ${i}
+                    </div>
+                `;
+                group.appendChild(label);
+            }
+        });
+
+        // Form Logic
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (!SCRIPT_URL) {
+                alert("Please add your Google Web App URL to the JavaScript code in index.html line 460!");
+                return;
+            }
+
+            const form = document.getElementById('healthCheckForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            // UI Loading State
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerText = "Submitting...";
+            btnIcon.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+
+            const formData = new FormData(form);
+
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // If the script returns a redirect or opaque response, we assume success
+                showSuccess();
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert("There was an error submitting the form. Please check your internet connection.");
+                resetBtn();
+            });
+        }
+
+        function resetBtn() {
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            btnText.innerText = "Submit Health Check";
+            btnIcon.classList.remove('hidden');
+            btnSpinner.classList.add('hidden');
+        }
+
+        function showSuccess() {
+            resetBtn();
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('healthCheckForm').reset();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 300);
+        }
+    </script>
+</body>
+</html>
